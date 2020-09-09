@@ -98,8 +98,7 @@ class Users(PP_DB_BASE):
     )
     updated_at = Column(
         DateTime,
-        default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
-        nullable=False
+        nullable=True
     )
 
     # functions

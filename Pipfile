@@ -16,6 +16,8 @@ sqlalchemy-utils = "*"
 pycryptodome = "*"
 requests = "*"
 requests-http-signature = "*"
+pydantic = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.8"
