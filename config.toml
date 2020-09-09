@@ -1,5 +1,0 @@
-[database]
-uri = "postgresql://pactplan:pIwBWg5Molun6X9P@localhost:5432/pactplan"
-
-[core]
-url = "https://example.com"
