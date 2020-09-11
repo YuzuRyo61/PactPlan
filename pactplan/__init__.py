@@ -2,8 +2,7 @@ import logging
 import pyfiglet
 from fastapi import FastAPI
 
-from .database import PP_DB
-
+from .api import PP_AR_WK
 
 __version__ = "0.1.0"
 
@@ -17,15 +16,19 @@ PP_APP = FastAPI(
     redoc_url="/api/docs-redoc"
 )
 
+PP_APP.include_router(
+    PP_AR_WK,
+    prefix="/.well-known",
+    tags=["well-known"]
+)
+
 
 @PP_APP.on_event("startup")
-async def startup():
+def startup():
     logging.info("\n" + pyfiglet.figlet_format("PactPlan"))
     logging.info("Social Networking Service for ActivityPub")
-    await PP_DB.connect()
 
 
 @PP_APP.on_event("shutdown")
-async def shutdown():
+def shutdown():
     logging.info("PactPlan is now shutting down... Bye!")
-    await PP_DB.disconnect()

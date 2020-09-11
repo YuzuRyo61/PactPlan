@@ -18,6 +18,7 @@ requests = "*"
 requests-http-signature = "*"
 pydantic = "*"
 psycopg2 = "*"
+sqlalchemy-migrate = "*"
 
 [requires]
 python_version = "3.8"
@@ -25,3 +26,4 @@ python_version = "3.8"
 [scripts]
 start = "uvicorn PactPlan:app"
 dev = "pipenv run start --reload"
+migration = "python migrate/manage.py"

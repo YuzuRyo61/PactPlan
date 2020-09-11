@@ -1,10 +1,12 @@
 import uuid
 
-from sqlalchemy import Column, text
+from sqlalchemy import Column
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.functions import current_timestamp
 from sqlalchemy.types import String, Boolean, Text, DateTime
 from sqlalchemy_utils import UUIDType
 
+from ..config import PP_CONFIG
 from ..database import PP_DB_BASE
 
 
@@ -101,6 +103,9 @@ class Users(PP_DB_BASE):
         nullable=True
     )
 
-    # functions
-    def username_lower(self):
-        return self.username.lower()
+    @hybrid_property
+    def acct(self):
+        if self.is_manual_follow is True:
+            return f"{self.username}@{self.remote_host}"
+        else:
+            return f"{self.username}@{PP_CONFIG['core']['url']['fqdn']}"
