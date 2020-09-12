@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2846ee760706521c59abd6600034a4b52028837fd5cb5b8320f7c3833758176a"
+            "sha256": "a713f23900ba51509eae3970a1de629fe38436fbb774b09536d1ce681de7fe68"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -217,6 +217,14 @@
             "index": "pypi",
             "version": "==0.61.1"
         },
+        "fastapi-login": {
+            "hashes": [
+                "sha256:44ffc4f38a1e9329dd99fe27bc5421d59e01c6e376fc357dd1f269a5f1470100",
+                "sha256:f2e9fbbda70f4f8b29080f01269af4efed9538f497d52be51e7d0f8f67768ae1"
+            ],
+            "index": "pypi",
+            "version": "==1.5.0"
+        },
         "graphene": {
             "hashes": [
                 "sha256:09165f03e1591b76bf57b133482db9be6dac72c74b0a628d3c93182af9c5a896",
@@ -328,6 +336,13 @@
                 "sha256:fa4d5d734e76d9f21a94444fbf1de7eea185b355b324d38c8a7456ce63c3bbeb"
             ],
             "version": "==3.3.1"
+        },
+        "passlib": {
+            "hashes": [
+                "sha256:68c35c98a7968850e17f1b6892720764cc7eed0ef2b7cb3116a89a28e43fe177",
+                "sha256:8d666cef936198bc2ab47ee9b0410c94adf2ba798e5a84bf220be079ae7ab6a8"
+            ],
+            "version": "==1.7.2"
         },
         "pbr": {
             "hashes": [
@@ -473,6 +488,13 @@
             ],
             "index": "pypi",
             "version": "==0.8.post1"
+        },
+        "pyjwt": {
+            "hashes": [
+                "sha256:5c6eca3c2940464d106b99ba83b00c6add741c9becaec087fb7ccdefea71350e",
+                "sha256:8d59a976fb773f3e6a39c85636357c4f0e242707394cadadd9814f5cbaa20e96"
+            ],
+            "version": "==1.7.1"
         },
         "pymysql": {
             "hashes": [

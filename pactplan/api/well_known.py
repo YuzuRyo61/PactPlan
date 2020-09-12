@@ -4,17 +4,25 @@ import re
 from fastapi import APIRouter, HTTPException, Depends, Response
 from sqlalchemy import and_, func
 from sqlalchemy.orm import Session
-from starlette.responses import JSONResponse
 
 from pactplan.config import PP_CONFIG
 from pactplan.depends import db_session
 from pactplan.models import Users
+from pactplan.response import NodeinfoResponse, WebFingerResponse
 
 PP_AR_WK = APIRouter()
 
 
-class WebFingerResponse(JSONResponse):
-    media_type = "application/jrd+json"
+@PP_AR_WK.get("/nodeinfo", response_class=NodeinfoResponse)
+def wk_nodeinfo():
+    return {
+        "links": [
+            {
+                "rel": "http://nodeinfo.diaspora.software/ns/schema/2.0",
+                "href": f"{PP_CONFIG['core']['url']['protocol']}://{PP_CONFIG['core']['url']['fqdn']}/nodeinfo/2.0"
+            }
+        ]
+    }
 
 
 @PP_AR_WK.get("/host-meta")

@@ -19,6 +19,7 @@ requests-http-signature = "*"
 pydantic = "*"
 psycopg2 = "*"
 sqlalchemy-migrate = "*"
+fastapi-login = "*"
 
 [requires]
 python_version = "3.8"
