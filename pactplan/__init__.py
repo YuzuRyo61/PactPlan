@@ -37,6 +37,14 @@ PP_APP.include_router(
 )
 
 
+PP_APP.include_router(
+    PP_AR_ACTIVITYPUB,
+    prefix="/activity",
+    tags=["activity"]
+)
+
+
+# on event
 @PP_APP.on_event("startup")
 def startup():
     logging.info("\n" + pyfiglet.figlet_format("PactPlan"))
