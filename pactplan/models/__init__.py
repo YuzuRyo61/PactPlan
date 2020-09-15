@@ -1,5 +1,7 @@
-from .users import Users
+from .plot import Plot
+from .user import User
 
 __all__ = [
-    "Users"
+    "User",
+    "Plot"
 ]

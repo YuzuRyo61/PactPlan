@@ -7,13 +7,16 @@ from sqlalchemy.orm import Session
 
 from pactplan.config import PP_CONFIG
 from pactplan.depends import db_session
-from pactplan.models import Users
+from pactplan.models import User
 from pactplan.response import NodeinfoResponse, WebFingerResponse
 
 PP_AR_WK = APIRouter()
 
 
-@PP_AR_WK.get("/nodeinfo", response_class=NodeinfoResponse)
+@PP_AR_WK.get(
+    "/nodeinfo",
+    response_class=NodeinfoResponse,
+    include_in_schema=False)
 def wk_nodeinfo():
     return {
         "links": [
@@ -25,7 +28,9 @@ def wk_nodeinfo():
     }
 
 
-@PP_AR_WK.get("/host-meta")
+@PP_AR_WK.get(
+    "/host-meta",
+    include_in_schema=False)
 def wk_hostmeta():
     hostmeta = """<?xml version="1.0" encoding="UTF-8"?>
 <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
@@ -41,7 +46,9 @@ def wk_hostmeta():
     )
 
 
-@PP_AR_WK.get("/host-meta.json")
+@PP_AR_WK.get(
+    "/host-meta.json",
+    include_in_schema=False)
 def wk_hostmeta_json():
     return {
         "links": [
@@ -54,7 +61,10 @@ def wk_hostmeta_json():
     }
 
 
-@PP_AR_WK.get("/webfinger", response_class=WebFingerResponse)
+@PP_AR_WK.get(
+    "/webfinger",
+    response_class=WebFingerResponse,
+    include_in_schema=False)
 def wk_webfinger(resource: str = None, db: Session = Depends(db_session)):
     if resource is None:
         raise HTTPException(
@@ -67,10 +77,10 @@ def wk_webfinger(resource: str = None, db: Session = Depends(db_session)):
         )
     parsed_resource = str(re.sub(r"^acct:", "", resource, count=1)).lower().split("@")
     logging.info(f"Fetching webfinger: {resource}")
-    query = db.query(Users).filter(and_(
-        func.lower(Users.username) == parsed_resource[0],
-        func.lower(Users.remote_host) == None,
-        Users.is_remote_user == False
+    query = db.query(User).filter(and_(
+        func.lower(User.username) == parsed_resource[0],
+        func.lower(User.remote_host) == None,
+        User.is_remote_user == False
     )).first()
 
     if query is None:

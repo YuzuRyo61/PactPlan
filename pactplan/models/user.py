@@ -10,7 +10,7 @@ from ..config import PP_CONFIG
 from ..database import PP_DB_BASE
 
 
-class Users(PP_DB_BASE):
+class User(PP_DB_BASE):
     __tablename__ = "users"
 
     # Columns

@@ -11,15 +11,14 @@ uvicorn = "*"
 pyfiglet = "*"
 toml = "*"
 sqlalchemy = "*"
-databases = {extras = ["mysql", "postgresql", "sqlite"], version = "*"}
 sqlalchemy-utils = "*"
 pycryptodome = "*"
 requests = "*"
 requests-http-signature = "*"
 pydantic = "*"
 psycopg2 = "*"
-sqlalchemy-migrate = "*"
 fastapi-login = "*"
+alembic = "*"
 
 [requires]
 python_version = "3.8"
@@ -27,4 +26,5 @@ python_version = "3.8"
 [scripts]
 start = "uvicorn PactPlan:app"
 dev = "pipenv run start --reload"
-migration = "python migrate/manage.py"
+makemigrations = "alembic revision --autogenerate"
+migrate = "alembic upgrade head"

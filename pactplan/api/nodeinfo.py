@@ -6,7 +6,10 @@ from pactplan.response import NodeinfoResponse
 PP_AR_NI = APIRouter()
 
 
-@PP_AR_NI.get("/2.0", response_class=NodeinfoResponse)
+@PP_AR_NI.get(
+    "/2.0",
+    response_class=NodeinfoResponse,
+    include_in_schema=False)
 def nodeinfo_20():
     return {
         "version": "2.0",

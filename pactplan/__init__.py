@@ -1,14 +1,16 @@
 import logging
+
 import pyfiglet
 from fastapi import FastAPI
 from fastapi_login import LoginManager
 
-from .api import PP_AR_WK, PP_AR_NI
 from .activitypub import PP_AR_ACTIVITYPUB
+from .api import PP_AR_WK, PP_AR_NI
 from .config import PP_CONFIG
 
 __version__ = "0.1.0"
 
+from .response import NodeinfoResponse
 
 PP_APP = FastAPI(
     title="PactPlan",
@@ -33,9 +35,9 @@ PP_APP.include_router(
 PP_APP.include_router(
     PP_AR_NI,
     prefix="/nodeinfo",
-    tags=["nodeinfo"]
+    tags=["nodeinfo"],
+    default_response_class=NodeinfoResponse
 )
-
 
 PP_APP.include_router(
     PP_AR_ACTIVITYPUB,
