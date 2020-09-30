@@ -1,11 +1,14 @@
+import configparser
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from .config import PP_CONFIG
+config = configparser.ConfigParser()
+config.read("alembic.ini")
 
 PP_DB_ENGINE = create_engine(
-    PP_CONFIG["database"]["uri"],
+    config["alembic"]["sqlalchemy.url"],
     echo=False
 )
 
