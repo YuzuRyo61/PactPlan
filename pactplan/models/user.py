@@ -2,6 +2,7 @@ import uuid
 
 from sqlalchemy import Column
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.functions import current_timestamp
 from sqlalchemy.types import String, Boolean, Text, DateTime
 from sqlalchemy_utils import UUIDType
@@ -101,6 +102,10 @@ class User(PP_DB_BASE):
     updated_at = Column(
         DateTime,
         nullable=True
+    )
+    plots = relationship(
+        "Plot",
+        back_populates="created_by"
     )
 
     @hybrid_property

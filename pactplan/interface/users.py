@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
 from typing import Optional
+
 from pydantic import BaseModel, Field
 
 
@@ -31,6 +32,9 @@ class ILocalUsers(IUsers):
     is_remote_user = False
     private_key: str
 
+    class Config:
+        orm_mode = True
+
 
 class IRemoteUsers(IUsers):
     """
@@ -45,3 +49,5 @@ class IRemoteUsers(IUsers):
     remote_uri: str
     remote_key_id: str
 
+    class Config:
+        orm_mode = True

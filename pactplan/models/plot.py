@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column
+from sqlalchemy import Column, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.functions import current_timestamp
 from sqlalchemy.types import String, Text, DateTime, Boolean
@@ -37,9 +37,13 @@ class Plot(PP_DB_BASE):
         String(512),
         nullable=True
     )
+    created_by_id = Column(
+        UUIDType(binary=False),
+        ForeignKey("users.id")
+    )
     created_by = relationship(
         "User",
-        backref="plots"
+        back_populates="plots"
     )
     created_at = Column(
         DateTime,
