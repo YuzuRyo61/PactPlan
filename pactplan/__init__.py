@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi_login import LoginManager
 
 from .activitypub import PP_AR_ACTIVITYPUB
-from .api import PP_AR_WK, PP_AR_NI
+from .api import PP_AR_WK, PP_AR_NI, PP_API_ROOT
 from .config import PP_CONFIG
 
 __version__ = "0.1.0"
@@ -43,6 +43,12 @@ PP_APP.include_router(
     PP_AR_ACTIVITYPUB,
     prefix="/activity",
     tags=["activity"]
+)
+
+PP_APP.include_router(
+    PP_API_ROOT,
+    prefix="/api",
+    tags=["api"]
 )
 
 
