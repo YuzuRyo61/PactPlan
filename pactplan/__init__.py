@@ -35,20 +35,17 @@ PP_APP.include_router(
 PP_APP.include_router(
     PP_AR_NI,
     prefix="/nodeinfo",
-    tags=["nodeinfo"],
     default_response_class=NodeinfoResponse
 )
 
 PP_APP.include_router(
     PP_AR_ACTIVITYPUB,
-    prefix="/activity",
-    tags=["activity"]
+    prefix="/activity"
 )
 
 PP_APP.include_router(
     PP_API_ROOT,
-    prefix="/api",
-    tags=["api"]
+    prefix="/api"
 )
 
 
