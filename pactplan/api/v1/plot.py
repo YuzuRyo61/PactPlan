@@ -13,7 +13,7 @@ PP_AR_PLOT = APIRouter()
 @PP_AR_PLOT.get(
     "/",
     response_model=Optional[List[IPlot]])
-def get_all_plots(db=Depends(db_session)):
+def get_plots(db=Depends(db_session)):
     query = db.query(Plot).all()
     if query is None:
         return []
