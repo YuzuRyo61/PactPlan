@@ -4,11 +4,14 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "*"
+tox = "*"
+pytest-cov = "*"
+flake8 = "*"
 
 [packages]
 fastapi = {extras = ["all"], version = "*"}
 uvicorn = "*"
-pyfiglet = "*"
 toml = "*"
 sqlalchemy = "*"
 sqlalchemy-utils = "*"
@@ -28,3 +31,4 @@ start = "uvicorn PactPlan:app"
 dev = "pipenv run start --reload"
 makemigrations = "alembic revision --autogenerate"
 migrate = "alembic upgrade head"
+lint = "flake8 ."

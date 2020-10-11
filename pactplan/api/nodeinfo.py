@@ -6,6 +6,10 @@ from pactplan.response import NodeinfoResponse
 PP_AR_NI = APIRouter()
 
 
+# Nodeinfo specification site:
+# https://nodeinfo.diaspora.software/
+
+
 @PP_AR_NI.get(
     "/2.0",
     response_class=NodeinfoResponse,

@@ -22,7 +22,8 @@ def wk_nodeinfo():
         "links": [
             {
                 "rel": "http://nodeinfo.diaspora.software/ns/schema/2.0",
-                "href": f"{PP_CONFIG['core']['url']['protocol']}://{PP_CONFIG['core']['url']['fqdn']}/nodeinfo/2.0"
+                "href": f"{PP_CONFIG['core']['url']['protocol']}://"
+                        f"{PP_CONFIG['core']['url']['fqdn']}/nodeinfo/2.0"
             }
         ]
     }
@@ -55,7 +56,9 @@ def wk_hostmeta_json():
             {
                 "rel": "lrdd",
                 "type": "application/jrd+json",
-                "template": "https://" + PP_CONFIG["core"]["url"]["fqdn"] + "/.well-known/webfinger?resource={uri}"
+                "template": "https://"
+                            + PP_CONFIG["core"]["url"]["fqdn"] +
+                            "/.well-known/webfinger?resource={uri}"
             }
         ]
     }
@@ -75,12 +78,13 @@ def wk_webfinger(resource: str = None, db: Session = Depends(db_session)):
         raise HTTPException(
             status_code=400
         )
-    parsed_resource = str(re.sub(r"^acct:", "", resource, count=1)).lower().split("@")
+    parsed_resource = str(
+        re.sub(r"^acct:", "", resource, count=1)).lower().split("@")
     logging.info(f"Fetching webfinger: {resource}")
     query = db.query(User).filter(and_(
         func.lower(User.username) == parsed_resource[0],
-        func.lower(User.remote_host) == None,
-        User.is_remote_user == False
+        func.lower(User.remote_host) is None,
+        User.is_remote_user is False
     )).first()
 
     if query is None:
@@ -95,13 +99,15 @@ def wk_webfinger(resource: str = None, db: Session = Depends(db_session)):
             {
                 "rel": "self",
                 "type": "application/activity+json",
-                "href": f"{PP_CONFIG['core']['url']['protocol']}://{PP_CONFIG['core']['url']['fqdn']}"
+                "href": f"{PP_CONFIG['core']['url']['protocol']}://"
+                        f"{PP_CONFIG['core']['url']['fqdn']}"
                         f"/activity/users/{query.id}"
             },
             {
                 "rel": "http://webfinger.net/rel/profile-page",
                 "type": "text/html",
-                "href": f"{PP_CONFIG['core']['url']['protocol']}://{PP_CONFIG['core']['url']['fqdn']}"
+                "href": f"{PP_CONFIG['core']['url']['protocol']}://"
+                        f"{PP_CONFIG['core']['url']['fqdn']}"
                         f"/web/user/{query.username}"
             }
         ]

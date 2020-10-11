@@ -1,6 +1,5 @@
 import logging
 
-import pyfiglet
 from fastapi import FastAPI
 from fastapi_login import LoginManager
 
@@ -52,7 +51,6 @@ PP_APP.include_router(
 # on event
 @PP_APP.on_event("startup")
 def startup():
-    logging.info("\n" + pyfiglet.figlet_format("PactPlan"))
     logging.info("Social Networking Service for ActivityPub")
 
 
