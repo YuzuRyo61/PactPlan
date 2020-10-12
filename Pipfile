@@ -22,6 +22,7 @@ pydantic = "*"
 psycopg2 = "*"
 fastapi-login = "*"
 alembic = "*"
+starlette = "*"
 
 [requires]
 python_version = "3.8"
