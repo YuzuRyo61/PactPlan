@@ -1,4 +1,4 @@
-from .database import PP_DB_SESSION
+from ..database import PP_DB_SESSION
 
 
 def db_session():
