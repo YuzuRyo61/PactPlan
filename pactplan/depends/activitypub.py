@@ -11,6 +11,7 @@ def strict_activitypub(
     ap_headers = [
         "application/activity+json",
         "application/activity+json;",
+        "application/activity+json; charset=utf-8",
         "application/ld+json",
         "application/ld+json;",
         "application/ld+json; profile=\"https://www.w3.org/ns/activitystreams\""
