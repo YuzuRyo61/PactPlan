@@ -18,6 +18,7 @@ def strict_activitypub(
     if content_type is None:
         if accept.lower() in ap_headers:
             yield True
+            return
         else:
             raise HTTPException(status_code=400, detail="Not ActivityPub Header")
     else:
@@ -27,11 +28,28 @@ def strict_activitypub(
                 for context in body.get("@context"):
                     if context == ap_context:
                         yield True
+                        return
                 raise HTTPException(status_code=400, detail="Not ActivityPub context")
             elif type(body.get("@context")) == str and \
                     body.get("@context") == ap_context:
                 yield True
+                return
             else:
                 raise HTTPException(status_code=400, detail="Not ActivityPub context")
         else:
             raise HTTPException(status_code=400, detail="Not ActivityPub Header")
+
+
+def is_activitypub(
+        content_type: Optional[str] = Header(None),
+        accept: Optional[str] = Header(None),
+        body=Body({})
+):
+    try:
+        return strict_activitypub(
+            content_type,
+            accept,
+            body
+        )
+    except HTTPException:
+        return False
