@@ -1,11 +1,12 @@
 from typing import Optional
 
-from fastapi import Header
+from fastapi import Header, HTTPException, Body
 
 
-def is_activity_header(
+def strict_activitypub(
         content_type: Optional[str] = Header(None),
-        accept: Optional[str] = Header(None)
+        accept: Optional[str] = Header(None),
+        body=Body({})
 ):
     ap_headers = [
         "application/activity+json",
@@ -18,9 +19,19 @@ def is_activity_header(
         if accept.lower() in ap_headers:
             yield True
         else:
-            yield False
+            raise HTTPException(status_code=400, detail="Not ActivityPub Header")
     else:
         if content_type.lower() in ap_headers:
-            yield True
+            ap_context = "https://www.w3.org/ns/activitystreams"
+            if type(body.get("@context")) == list:
+                for context in body.get("@context"):
+                    if context == ap_context:
+                        yield True
+                raise HTTPException(status_code=400, detail="Not ActivityPub context")
+            elif type(body.get("@context")) == str and \
+                    body.get("@context") == ap_context:
+                yield True
+            else:
+                raise HTTPException(status_code=400, detail="Not ActivityPub context")
         else:
-            yield False
+            raise HTTPException(status_code=400, detail="Not ActivityPub Header")

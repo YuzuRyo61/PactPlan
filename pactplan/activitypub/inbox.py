@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
-from ..depends import is_activity_header
+from ..depends import strict_activitypub
 
 PP_AR_INBOX = APIRouter()
 
@@ -10,8 +10,6 @@ PP_AR_INBOX = APIRouter()
     include_in_schema=False
 )
 def ap_public_inbox(
-        is_ap=Depends(is_activity_header)
+        is_ap=Depends(strict_activitypub)
 ):
-    if not is_ap:
-        raise HTTPException(status_code=400, detail="Not ActivityPub Header")
     return {"is_activity_header": is_ap}

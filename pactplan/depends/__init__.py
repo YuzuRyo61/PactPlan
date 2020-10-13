@@ -1,7 +1,7 @@
-from .activitypub import is_activity_header
+from .activitypub import strict_activitypub
 from .db_session import db_session
 
 __all__ = [
-    "is_activity_header",
+    "strict_activitypub",
     "db_session"
 ]
