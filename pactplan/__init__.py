@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi_login import LoginManager
 
 from .activitypub import PP_AR_ACTIVITYPUB
-from .api import PP_AR_WK, PP_AR_NI, PP_API_ROOT
+from .api import PP_AR_WK, PP_AR_NI, PP_API_ROOT, PP_AR_OA
 from .config import PP_CONFIG
 
 __version__ = "0.1.0"
@@ -27,8 +27,7 @@ PP_LOGIN = LoginManager(PP_CONFIG, tokenUrl="/auth/token")
 # Register router
 PP_APP.include_router(
     PP_AR_WK,
-    prefix="/.well-known",
-    tags=["well-known"]
+    prefix="/.well-known"
 )
 
 PP_APP.include_router(
@@ -41,6 +40,12 @@ PP_APP.include_router(
     PP_AR_ACTIVITYPUB,
     prefix="/activity",
     default_response_class=ActivityPubResponse
+)
+
+PP_APP.include_router(
+    PP_AR_OA,
+    prefix="/oauth",
+    tags=["oauth", "auth"]
 )
 
 PP_APP.include_router(

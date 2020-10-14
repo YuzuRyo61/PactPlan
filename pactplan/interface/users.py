@@ -31,6 +31,7 @@ class ILocalUsers(IUsers):
     """
     is_remote_user = False
     private_key: str
+    password: bytes
 
     class Config:
         orm_mode = True

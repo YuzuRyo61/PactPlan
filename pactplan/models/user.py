@@ -4,7 +4,7 @@ from sqlalchemy import Column
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.functions import current_timestamp
-from sqlalchemy.types import String, Boolean, Text, DateTime
+from sqlalchemy.types import String, Boolean, Text, DateTime, LargeBinary
 from sqlalchemy_utils import UUIDType
 
 from ..config import PP_CONFIG
@@ -22,6 +22,10 @@ class User(PP_DB_BASE):
     )
     username = Column(
         String(32)
+    )
+    password = Column(
+        LargeBinary(),
+        nullable=True
     )
     display_name = Column(
         String(255),

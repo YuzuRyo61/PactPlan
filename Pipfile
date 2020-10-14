@@ -23,6 +23,7 @@ psycopg2 = "*"
 fastapi-login = "*"
 alembic = "*"
 starlette = "*"
+bcrypt = "*"
 
 [requires]
 python_version = "3.8"
