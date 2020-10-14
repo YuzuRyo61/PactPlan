@@ -1,5 +1,14 @@
-from starlette.responses import JSONResponse
+import json
+from typing import Union
+
+from fastapi import Response
 
 
-class ActivityPubResponse(JSONResponse):
-    media_type = "application/activity+json; charset=utf-8"
+def activity_response(
+        response: Union[str, dict],
+        ap_header: str
+):
+    return Response(
+        content=json.dumps(response) if type(response) == dict else response,
+        media_type=ap_header
+    )

@@ -1,11 +1,13 @@
 import uuid
+from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Header
 
 from .template import ap_context
 from ..config import PP_CONFIG
 from ..depends import is_activitypub, db_session
 from ..models import User
+from ..response import activity_response
 
 PP_AR_APUSER = APIRouter()
 
@@ -17,7 +19,9 @@ PP_AR_APUSER = APIRouter()
 def ap_user(
         user_uuid: uuid.UUID,
         is_ap=Depends(is_activitypub),
-        db=Depends(db_session)
+        db=Depends(db_session),
+        accept: Optional[str] = Header(
+            "application/activity+json; charset=utf-8")
 ):
     query = db.query(User).get(user_uuid)
     if query is None:
@@ -38,7 +42,7 @@ def ap_user(
         f"/activity/inbox"
     )
 
-    return {
+    response = {
         "@context": ap_context,
         "type": "Service" if query.is_bot else "Person",
         "id": ap_user_base_url,
@@ -69,3 +73,8 @@ def ap_user(
             "publicKeyPem": query.public_key
         }
     }
+
+    return activity_response(
+        response,
+        accept
+    )

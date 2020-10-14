@@ -1,9 +1,9 @@
 from typing import Optional
 
-from fastapi import Header, HTTPException, Body
+from fastapi import Header, HTTPException, Body, Depends
 
 
-def strict_activitypub(
+def is_activitypub(
         content_type: Optional[str] = Header(None),
         accept: Optional[str] = Header(None),
         body=Body({})
@@ -19,43 +19,31 @@ def strict_activitypub(
     )
     if content_type is None:
         if accept.lower() in ap_headers:
-            yield True
-            return
+            return True
         else:
-            raise HTTPException(
-                status_code=400, detail="Not ActivityPub Header")
+            return False
     else:
         if content_type.lower() in ap_headers:
             ap_context = "https://www.w3.org/ns/activitystreams"
             if type(body.get("@context")) == list:
                 for context in body.get("@context"):
                     if context == ap_context:
-                        yield True
-                        return
-                raise HTTPException(
-                    status_code=400, detail="Not ActivityPub context")
+                        return True
+                return False
             elif type(body.get("@context")) == str and \
                     body.get("@context") == ap_context:
-                yield True
-                return
+                return True
             else:
-                raise HTTPException(
-                    status_code=400, detail="Not ActivityPub context")
+                return False
         else:
-            raise HTTPException(
-                status_code=400, detail="Not ActivityPub Header")
+            return False
 
 
-def is_activitypub(
-        content_type: Optional[str] = Header(None),
-        accept: Optional[str] = Header(None),
-        body=Body({})
+def strict_activitypub(
+        is_ap=Depends(is_activitypub)
 ):
-    try:
-        return strict_activitypub(
-            content_type,
-            accept,
-            body
-        )
-    except HTTPException:
-        return False
+    if is_ap:
+        return True
+    else:
+        raise HTTPException(
+            status_code=400, detail="Not ActivityPub")

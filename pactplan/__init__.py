@@ -9,7 +9,7 @@ from .config import PP_CONFIG
 
 __version__ = "0.1.0"
 
-from .response import NodeinfoResponse, ActivityPubResponse
+from .response import NodeinfoResponse
 
 PP_APP = FastAPI(
     title="PactPlan",
@@ -38,8 +38,7 @@ PP_APP.include_router(
 
 PP_APP.include_router(
     PP_AR_ACTIVITYPUB,
-    prefix="/activity",
-    default_response_class=ActivityPubResponse
+    prefix="/activity"
 )
 
 PP_APP.include_router(

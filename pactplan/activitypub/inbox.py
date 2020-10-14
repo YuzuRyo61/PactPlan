@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 
 from ..depends import strict_activitypub, db_session
 from ..models import User
@@ -17,7 +17,10 @@ def ap_public_inbox(
         _=Depends(strict_activitypub)
 ):
     # TODO: Inbox系の処理を書く。HTTP Signatureの検証も忘れずに
-    pass
+
+    return Response(
+        status_code=202
+    )
 
 
 @PP_AR_APINBOX.post(
@@ -33,4 +36,9 @@ def ap_user_inbox(
     query = db.query(User).get(user_uuid)
     if query is None:
         raise HTTPException(status_code=404, detail="Unknown user")
-    pass
+
+    # TODO: Inbox系の処理を書く。HTTP Signatureの検証も忘れずに
+
+    return Response(
+        status_code=202
+    )
