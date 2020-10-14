@@ -52,3 +52,25 @@ class IRemoteUsers(IUsers):
 
     class Config:
         orm_mode = True
+
+
+class UserInModel(BaseModel):
+    username: str
+    display_name: Optional[str]
+    description: Optional[str]
+    is_bot: bool = False
+    is_manual_follow: bool = False
+
+    class Config:
+        orm_mode = True
+
+
+class UserModel(UserInModel):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4)
+    is_admin: bool = False
+    is_moderator: bool = False
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: Optional[datetime]
+
+    class Config:
+        orm_mode = True

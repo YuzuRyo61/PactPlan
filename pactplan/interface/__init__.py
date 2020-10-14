@@ -1,6 +1,6 @@
 from .key import IKey
 from .plot import IPlot
-from .users import IUsers, ILocalUsers, IRemoteUsers
+from .users import IUsers, ILocalUsers, IRemoteUsers, UserModel, UserInModel
 
 __all__ = [
     "ILocalUsers",
@@ -8,4 +8,6 @@ __all__ = [
     "IUsers",
     "IKey",
     "IPlot",
+    "UserModel",
+    "UserInModel",
 ]

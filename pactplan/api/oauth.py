@@ -37,5 +37,8 @@ async def oauth_pb_login(
             detail="Incorrect username or password"
         )
 
-    # TODO: ここにアクセストークンの発行とかを書くのかも。とりあえず仮でTrue返してる
-    return True
+    # TODO: ここにアクセストークンの発行とかを書くのかも。まだ仮実装のためセキュリティガバ。
+    return {
+        "access_token": str(data.id),
+        "token_type": "bearer"
+    }
