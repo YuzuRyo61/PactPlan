@@ -21,7 +21,10 @@ def get_users(db=Depends(db_session)):
     "/uuid/{user_id}",
     summary="Get user via UUID"
 )
-def get_user_uuid(user_id: uuid.UUID):
+def get_user_uuid(
+        user_id: uuid.UUID,
+        db=Depends(db_session)
+):
     query = db.query(User).get(user_id)
     if query is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -32,4 +35,5 @@ def get_user_uuid(user_id: uuid.UUID):
     summary="Get user via username"
 )
 def get_user_username(username: str, db=Depends(db_session)):
-    query = db.query(User)
+    # query = db.query(User)
+    pass
