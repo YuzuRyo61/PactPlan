@@ -3,9 +3,9 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Header
 
-from .template import ap_context
 from ..config import PP_CONFIG
 from ..depends import is_activitypub, db_session
+from ..interface.activitypub import APUser
 from ..models import User
 from ..response import activity_response
 
@@ -42,8 +42,7 @@ def ap_user(
         f"/activity/inbox"
     )
 
-    response = {
-        "@context": ap_context,
+    response = APUser(**{
         "type": "Service" if query.is_bot else "Person",
         "id": ap_user_base_url,
         "inbox": f"{ap_user_base_url}/inbox",
@@ -72,9 +71,12 @@ def ap_user(
             "owner": ap_user_base_url,
             "publicKeyPem": query.public_key
         }
-    }
+    })
 
     return activity_response(
-        response,
+        response.dict(
+            by_alias=True,
+            exclude_none=True
+        ),
         accept
     )
