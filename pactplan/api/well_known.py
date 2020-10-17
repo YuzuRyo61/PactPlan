@@ -83,8 +83,7 @@ def wk_webfinger(resource: str = None, db: Session = Depends(db_session)):
     logging.info(f"Fetching webfinger: {resource}")
     query = db.query(User).filter(and_(
         func.lower(User.username) == parsed_resource[0],
-        func.lower(User.remote_host) is None,
-        User.is_remote_user is False
+        User.is_remote_user == False  # noqa: E712
     )).first()
 
     if query is None:
