@@ -100,7 +100,7 @@ def wk_webfinger(resource: str = None, db: Session = Depends(db_session)):
                 "type": "application/activity+json",
                 "href": f"{PP_CONFIG['core']['url']['protocol']}://"
                         f"{PP_CONFIG['core']['url']['fqdn']}"
-                        f"/activity/users/{query.id}"
+                        f"/activity/user/{query.id}"
             },
             {
                 "rel": "http://webfinger.net/rel/profile-page",
