@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Header
 
 from ..config import PP_CONFIG
 from ..depends import is_activitypub, db_session
-from ..interface.activitypub import APUser
+from ..interface.activitypub import APUser, APKey
 from ..models import User
 from ..response import activity_response
 
@@ -65,12 +65,12 @@ def ap_user(
         "image": None,  # TODO: ヘッダー設定
         "tag": [],  # TODO: 説明文から抽出
         "manuallyApprovesFollowers": query.is_manual_follow,
-        "publicKey": {
+        "publicKey": APKey(**{
             "id": f"{ap_user_base_url}#main-key",
             "type": "Key",
             "owner": ap_user_base_url,
             "publicKeyPem": query.public_key
-        }
+        })
     })
 
     return activity_response(

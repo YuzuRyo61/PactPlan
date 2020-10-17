@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import constr
 
 from .base import APBase, http_regex
+from .key import APKey
 
 
 class APUser(APBase):
@@ -29,4 +30,4 @@ class APUser(APBase):
     image: Optional[dict]  # TODO: 仮の型指定。将来的に変更。
     tag: Optional[list]  # TODO: 仮の型指定。将来的に変更。
     manuallyApprovesFollows: bool = False
-    publicKey: Optional[dict]
+    publicKey: Optional[APKey]
